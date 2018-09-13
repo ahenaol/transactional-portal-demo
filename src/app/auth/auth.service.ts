@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { environment } from './../../environments/environment';
+import { User } from 'msal';
 
 @Injectable()
 export class AuthService {
@@ -43,5 +44,14 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  get getUserName(): string {
+    var user = this.msalService.getUser();
+    if (user) {
+      return user.name;
+    } else {
+      return null;
+    }
   }
 }

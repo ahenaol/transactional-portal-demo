@@ -1,6 +1,7 @@
 <nav class="navbar navbar-light bg-light">
   <span class="navbar-brand mb-0 h1">Portal Transaccional</span>
   <form class="form-inline">
+    <span class="navbar-text mr-sm-2" *ngIf="authService.isLoggedIn">{{authService.getUserName}}</span>
     <button class="btn btn-outline-secondary" type="button" (click)="login()" *ngIf="!authService.isLoggedIn">Login</button>
     <button class="btn btn-outline-secondary" type="button" (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
   </form>
