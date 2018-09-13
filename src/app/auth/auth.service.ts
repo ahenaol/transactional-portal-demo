@@ -6,19 +6,19 @@ import { environment } from './../../environments/environment';
 export class AuthService {
   forgottenPassword : boolean
 
-  constructor(private authService : MsalService) {
+  constructor(private msalService : MsalService) {
     this.forgottenPassword = false;
   }
 
   login() {
     if(this.forgottenPassword) {
-      this.authService.authority = environment.auth.authorityPR;
+      this.msalService.authority = environment.auth.authorityPR;
       this.forgottenPassword = false;
     } else {
-      this.authService.authority = environment.auth.authoritySuSi;
+      this.msalService.authority = environment.auth.authoritySuSi;
     }
 
-    this.authService.loginPopup(environment.auth.b2cScopes)
+    this.msalService.loginPopup(environment.auth.b2cScopes)
     .catch(err => {
       if(err.indexOf('AADB2C90118') > -1) {
         // The user has forgotten their password
@@ -35,6 +35,13 @@ export class AuthService {
 
   logout() {
     console.log("logout");
-    this.authService.logout();
+    this.msalService.logout();
+  }
+
+  get isLoggedIn(): boolean {
+    if (this.msalService.getUser()) {      
+      return true;
+    }
+    return false;
   }
 }
